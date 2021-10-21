@@ -23,12 +23,22 @@ namespace IdentityServer
             {
                 ClientId = "Client_1",
                 // 一个ID可以有多个密钥
-                ClientSecrets ={new Secret("Secret_1".Sha256()),new Secret("Secret_2".Sha256())},
+                ClientSecrets ={new Secret("Secret_1".Sha256())},
                 //指定客户端凭据许可模式
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 //客户端允许的API范围,可以多组
                 AllowedScopes ={"api_1"}
             },
+            new Client
+            {
+                ClientId = "Client_2",
+                // 一个ID可以有多个密钥
+                ClientSecrets ={new Secret("Secret_1".Sha256())},
+                //指定客户端凭据许可模式
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                //客户端允许的API范围,可以多组
+                AllowedScopes ={"api_2"}
+            }
         };
     }
 }
