@@ -1,5 +1,4 @@
 ﻿// 利用IdentityModel访问，里面包含了访问Identity Server的方法，主要用于发现端点，只需要Identity的根地址
-// model异步， viod => asyns
 using System;
 using IdentityModel.Client;
 using System.Threading.Tasks;
@@ -10,6 +9,7 @@ namespace Client
 {
     class Program
     {
+        // model异步， viod => asyns
         static async Task Main(string[] args)
         {
             // 创建客户端对象
