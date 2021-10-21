@@ -11,11 +11,10 @@ namespace IdentityServer
         // 定义被保护的API范围（Scope）
         public static IEnumerable<ApiScope> ApiScopes => new[]
         {
-            new ApiScope
-            {
-                Name = "api_1",
-                DisplayName = "sample_api_1"
-            },
+            new ApiScope{Name = "api_1",DisplayName = "sample_api_1"},
+            new ApiScope{Name = "api_2",DisplayName = "sample_api_2"},
+            new ApiScope{Name = "api_3",DisplayName = "sample_api_3"},
+            new ApiScope{Name = "api_4",DisplayName = "sample_api_4"}
         };
         // 定义客户端
         public static IEnumerable<Client> Clients => new[]
@@ -23,12 +22,8 @@ namespace IdentityServer
             new Client
             {
                 ClientId = "Client_1",
-                ClientSecrets =
-                {
-                    // 一个ID可以有多个密钥
-                    new Secret("Secret_1".Sha256()),
-                    new Secret("Secret_2".Sha256())
-                },
+                // 一个ID可以有多个密钥
+                ClientSecrets ={new Secret("Secret_1".Sha256()),new Secret("Secret_2".Sha256())},
                 //指定客户端凭据许可模式
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 //客户端允许的API范围,可以多组
