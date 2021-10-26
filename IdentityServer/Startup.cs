@@ -16,6 +16,8 @@ namespace IdentityServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // 注册MVC服务
+            services.AddControllersWithViews();
             // 注册Identity Server 4 的服务
             var builder = services.AddIdentityServer();
             builder.AddDeveloperSigningCredential();// 在启动应用的时候为开发者提供一个临时密钥，以文件形式保存
@@ -32,8 +34,18 @@ namespace IdentityServer
             {
                 app.UseDeveloperExceptionPage();
             }
+            //MVC
+            app.UseStaticFiles(); // 静态资源中间件
+            app.UseRouting(); // 注册路由中间件
 
             app.UseIdentityServer();
+            app.UseAuthorization(); //注册授权中间件
+
+            // 注册端点中间件
+            app.UseEndpoints(enptoints =>
+            {
+                enptoints.MapDefaultControllerRoute(); // 默认控制器路由
+            });
         }
     }
 }
