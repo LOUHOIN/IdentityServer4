@@ -1,7 +1,9 @@
 using IdentityServer4.Models;
+using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IdentityServer
@@ -13,8 +15,6 @@ namespace IdentityServer
         {
             new ApiScope{Name = "api_1",DisplayName = "sample_api_1"},
             new ApiScope{Name = "api_2",DisplayName = "sample_api_2"},
-            new ApiScope{Name = "api_3",DisplayName = "sample_api_3"},
-            new ApiScope{Name = "api_4",DisplayName = "sample_api_4"}
         };
         // 定义客户端
         public static IEnumerable<Client> Clients => new[]
@@ -31,13 +31,28 @@ namespace IdentityServer
             },
             new Client
             {
-                ClientId = "Client_2",
+                ClientId = "Client_role",
                 // 一个ID可以有多个密钥
-                ClientSecrets ={new Secret("Secret_1".Sha256())},
+                ClientSecrets ={new Secret("Secret_rote".Sha256())},
                 //指定客户端凭据许可模式
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 //客户端允许的API范围,可以多组
-                AllowedScopes ={"api_2"}
+                AllowedScopes ={"api_1"}
+            }
+        };
+
+        public static List<TestUser> GetUsers => new List<TestUser>
+        {
+            new TestUser
+            {
+                SubjectId ="1",
+                Username = "louhoin",
+                Password = "plouhoin",
+                Claims = new List<Claim>
+                {
+                    new Claim("scope","api_1"),
+                    new Claim("scope","api_2"),
+                }
             }
         };
     }

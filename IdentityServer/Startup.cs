@@ -22,6 +22,7 @@ namespace IdentityServer
             // 保存在内存中，之后改成DB
             builder.AddInMemoryApiScopes(Config.ApiScopes);
             builder.AddInMemoryClients(Config.Clients);
+            builder.AddTestUsers(Config.GetUsers);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
