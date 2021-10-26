@@ -1,3 +1,4 @@
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System.Collections.Generic;
@@ -35,7 +36,34 @@ namespace IdentityServer
                 AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 //客户端允许的API范围,可以多组
                 AllowedScopes ={"api_1"}
+            },
+            new Client
+            {
+                ClientId = "Client_mvc",
+                ClientName = "Client MVC",
+                // 一个ID可以有多个密钥
+                ClientSecrets ={new Secret("Secret_mvc".Sha256())},
+                //指定客户端凭据许可模式
+                AllowedGrantTypes = GrantTypes.Code,
+                // MVC客户端回调地址
+                RedirectUris = {"https://localhost:4001/signin-oidc"},
+                // 登出地址
+                PostLogoutRedirectUris = { "https://localhost:4001/signin-callback-oidc" },
+                // 允许那些身份访问资源
+                //客户端允许的API范围,可以多组
+                AllowedScopes ={
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                },
+                // 是否需要用户同意
+                RequireConsent = true
             }
+        };
+
+        public static IEnumerable<IdentityResource> identityResources => new List<IdentityResource>
+        {
+            new IdentityResources.OpenId(),
+            new IdentityResources.Profile()
         };
 
         public static List<TestUser> GetUsers => new List<TestUser>

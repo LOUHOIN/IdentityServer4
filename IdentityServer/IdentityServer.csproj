@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <targetframework>net5.0</targetframework>
-    <!--<TargetFramework>netcoreapp3.1</TargetFramework>-->
   </PropertyGroup>
 
   <ItemGroup>
