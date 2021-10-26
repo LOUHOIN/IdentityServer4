@@ -20,9 +20,9 @@ namespace IdentityServer
             var builder = services.AddIdentityServer();
             builder.AddDeveloperSigningCredential();// 在启动应用的时候为开发者提供一个临时密钥，以文件形式保存
             // 保存在内存中，之后改成DB
-            builder.AddInMemoryApiScopes(Config.ApiScopes);
-            builder.AddInMemoryClients(Config.Clients);
-            builder.AddTestUsers(Config.GetUsers);
+            builder.AddInMemoryApiScopes(Config.ApiScopes)
+                   .AddInMemoryClients(Config.Clients)
+                   .AddTestUsers(Config.GetUsers);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

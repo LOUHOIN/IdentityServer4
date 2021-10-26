@@ -1,10 +1,7 @@
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace IdentityServer
 {
@@ -45,7 +42,7 @@ namespace IdentityServer
         {
             new TestUser
             {
-                SubjectId ="1",
+                SubjectId ="1",// 用户的唯一标识
                 Username = "louhoin",
                 Password = "plouhoin",
                 Claims = new List<Claim>

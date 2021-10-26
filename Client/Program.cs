@@ -23,38 +23,85 @@ namespace Client
                 return;
             }
 
-            // 使用发现文档响应对象（disco）的信息去IDS申请令牌,参数是请求对象
-            var tokenResponse = await client.RequestClientCredentialsTokenAsync(
-                // 请求对象
-                new ClientCredentialsTokenRequest
-                {
-                    Address = disco.TokenEndpoint,// 令牌的端点地址
-                    ClientId = "Client_1",//客户端ID
-                    ClientSecret = "Secret_1"//客户端密钥
-                }
-            );
-            // 判断请求是否有错误发生
-            if (tokenResponse.IsError)
-            {
-                Console.WriteLine(disco.Error);
-                return;
-            }
-            // 打印正确的令牌
-            Console.WriteLine(tokenResponse.Json);
+            Console.WriteLine("Input Client or User:");
+            string ch = Console.ReadLine();
 
-            // 利用令牌访问Api，使用Http授权头
-            var apiClient = new HttpClient();
-            apiClient.SetBearerToken(tokenResponse.AccessToken);
-            //请求Api
-            var response = await apiClient.GetAsync("https://localhost:6001/Identity");
-            if (!response.IsSuccessStatusCode)
+            if (ch == "Clinet")
             {
-                Console.WriteLine(response.StatusCode);//Unauthorized
-                return;
+                // 使用发现文档响应对象（disco）的信息去IDS申请令牌,参数是请求对象
+                var tokenResponse = await client.RequestClientCredentialsTokenAsync(
+                    // 请求对象
+                    new ClientCredentialsTokenRequest
+                    {
+                        Address = disco.TokenEndpoint,// 令牌的端点地址
+                        ClientId = "Client_1",//客户端ID
+                        ClientSecret = "Secret_1"//客户端密钥
+                    }
+                );
+
+                // 判断请求是否有错误发生
+                if (tokenResponse.IsError)
+                {
+                    Console.WriteLine(disco.Error);
+                    return;
+                }
+                // 打印正确的令牌
+                Console.WriteLine(tokenResponse.Json);
+
+                // 利用令牌访问Api，使用Http授权头
+                var apiClient = new HttpClient();
+                apiClient.SetBearerToken(tokenResponse.AccessToken);
+                //请求Api
+                var response = await apiClient.GetAsync("https://localhost:6001/Identity");
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine(response.StatusCode);//Unauthorized
+                    return;
+                }
+                //成功，读取响应字符
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(JArray.Parse(content));
             }
-            //成功，读取响应字符
-            var content = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(JArray.Parse(content));
+            else if(ch =="User")
+            {
+                //请求 pwd
+                var tokenResponse = await client.RequestPasswordTokenAsync(
+                    // 请求对象
+                    new PasswordTokenRequest
+                    {
+                        Address = disco.TokenEndpoint,// 令牌的端点地址
+                       
+                        ClientId = "Client_role",//客户端ID
+                        ClientSecret = "Secret_rote",//客户端密钥
+                        UserName = "louhoin",
+                        Password = "plouhoin"
+                    }
+                );
+
+                // 判断请求是否有错误发生
+                if (tokenResponse.IsError)
+                {
+                    Console.WriteLine(disco.Error);
+                    return;
+                }
+                // 打印正确的令牌
+                Console.WriteLine(tokenResponse.Json);
+
+                // 利用令牌访问Api，使用Http授权头
+                var apiClient = new HttpClient();
+                apiClient.SetBearerToken(tokenResponse.AccessToken);
+                //请求Api
+                var response = await apiClient.GetAsync("https://localhost:6001/Identity");
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine(response.StatusCode);//Unauthorized
+                    return;
+                }
+                //成功，读取响应字符
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(JArray.Parse(content));
+            }   
+
         }
     }
 }
