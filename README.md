@@ -5,7 +5,6 @@
 ## Authorization Server 授权服务器
 * 被资源信任，可以发布安全凭据（Access Token）给客户端应用
 * ![](./img/01.png)
-## 
 
 ## Authorization Grant（授权类型）
 ### Authorization Code（授权码）
@@ -33,3 +32,19 @@
 * 由Authorization Server颁发给客户端应用的
 * 是个可选项
 * 具备让客户端应用逐渐降低访问权限的能力（Scope越来越小）
+* ![](./img/02.png)
+
+## 发生错误时
+* error（错误的类型）
+* error description（错误的描述信息）
+* error uri（页面）
+* state（状态）
+* Authoriza Endpoint（http://xxx.xxx.xx//authorize?error=invalid request）
+* Token Endpoint（通过url返回）
+## 错误类型：
+* invalid request 
+* invalid client
+* invalid grant
+* unauthorized client
+* unsupported grant type
+* invalid scope
