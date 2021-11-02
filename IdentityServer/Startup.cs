@@ -25,7 +25,7 @@ namespace IdentityServer
             builder.AddInMemoryApiScopes(Config.ApiScopes)
                    .AddInMemoryClients(Config.Clients)
                    .AddTestUsers(Config.GetUsers)
-                   .AddInMemoryIdentityResources(Config.identityResources);
+                   .AddInMemoryIdentityResources(Config.IdentityResources);
             
         }
 
